@@ -30,7 +30,7 @@ else if(score>=70) status="🟡 Hold";
 else if(score>=50) status="🟠 Sell";
 else status="🔴 Strong Sell";
 
-tbody.innerHTML +=`
+tbody.innerHTML += `
 
 <tr>
 
@@ -44,21 +44,45 @@ tbody.innerHTML +=`
 
 </td>
 
-<td>$ ${coin.current_price.toLocaleString()}</td>
+<td>
 
-<td>${score}</td>
+$${coin.current_price.toLocaleString()}
 
-<td>${coin.price_change_percentage_24h.toFixed(2)}%</td>
+</td>
 
-<td>${status}</td>
+<td style="color:${coin.price_change_percentage_24h>=0?'green':'red'}">
+
+${coin.price_change_percentage_24h.toFixed(2)}%
+
+</td>
 
 <td>
 
-<button>
+$${(coin.total_volume/1000000).toFixed(2)} M
 
-Detail
+</td>
 
-</button>
+<td>
+
+$${(coin.market_cap/1000000000).toFixed(2)} B
+
+</td>
+
+<td>
+
+${score}
+
+</td>
+
+<td>
+
+${status}
+
+</td>
+
+<td>
+
+<button>Lihat</button>
 
 </td>
 
