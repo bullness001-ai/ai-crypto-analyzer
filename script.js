@@ -1,7 +1,7 @@
-// ===========================================
+// ==========================================
 // AI CRYPTO ANALYZER
-// VERSION 2.0
-// ===========================================
+// VERSION 1.0
+// ==========================================
 
 const API_URL =
 "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false";
@@ -12,99 +12,135 @@ try{
 
 const response = await fetch(API_URL);
 
-const data = await response.json();
+const coins = await response.json();
 
-const tbody=document.querySelector("#cryptoTable tbody");
+const tbody = document.querySelector("#cryptoTable tbody");
 
 tbody.innerHTML="";
 
-data.forEach((coin,index)=>{
+coins.sort((a,b)=>b.market_cap-a.market_cap);
 
-let score=Math.floor(Math.random()*25)+75;
+coins.forEach((coin,index)=>{
 
-let scoreClass="score-low";
+let score=50;
 
-if(score>=90){
-scoreClass="score-high";
+// ===== Harga 24 Jam =====
+
+const change=coin.price_change_percentage_24h||0;
+
+if(change>10){
+score+=30;
 }
-else if(score>=75){
-scoreClass="score-medium";
+else if(change>5){
+score+=20;
+}
+else if(change>2){
+score+=10;
 }
 
-let status="🟡 Hold";
+// ===== Market Cap =====
 
-if(score>=95){
-status="🟢 Strong Buy";
+if(index<10){
+score+=20;
 }
-else if(score>=85){
-status="🟢 Buy";
+else if(index<25){
+score+=10;
 }
-else if(score>=70){
-status="🟡 Hold";
+
+// ===== Volume =====
+
+if(coin.total_volume>1000000000){
+score+=10;
 }
-else if(score>=50){
-status="🟠 Sell";
+
+if(score>100){
+score=100;
 }
-else{
-status="🔴 Strong Sell";
-}
+
+// ===== Trend =====
 
 let trend="➡ Sideways";
 
-if(coin.price_change_percentage_24h>5){
+if(change>5){
 trend="🟢 Bullish";
 }
-else if(coin.price_change_percentage_24h<-5){
+else if(change<-5){
 trend="🔴 Bearish";
-}tbody.innerHTML += `
+}
+
+// ===== Signal =====
+
+let signal="🔴 Strong Sell";
+
+if(score>=90){
+signal="🟢 Strong Buy";
+}
+else if(score>=80){
+signal="🟢 Buy";
+}
+else if(score>=65){
+signal="🟡 Hold";
+}
+else if(score>=50){
+signal="🟠 Sell";
+}
+// ===== Warna Perubahan Harga =====
+
+const changeColor = change >= 0 ? "#16a34a" : "#dc2626";
+
+tbody.innerHTML += `
 
 <tr>
 
-<td>${index+1}</td>
+<td>${index + 1}</td>
 
 <td>
-
-<img src="${coin.image}" width="28" height="28">
-
+<img src="${coin.image}" width="24" height="24">
 <b>${coin.symbol.toUpperCase()}</b>
-
 </td>
 
 <td>
-
 $${coin.current_price.toLocaleString()}
-
 </td>
 
-<td style="color:${coin.price_change_percentage_24h>=0?'green':'red'}">
-
-${coin.price_change_percentage_24h.toFixed(2)}%
-
+<td style="color:${changeColor};font-weight:bold;">
+${change.toFixed(2)}%
 </td>
 
 <td>
-
-$${(coin.total_volume/1000000).toFixed(2)} M
-
-</td>
-
-<td>
-
 $${(coin.market_cap/1000000000).toFixed(2)} B
-
 </td>
 
 <td>
+$${(coin.total_volume/1000000).toFixed(2)} M
+</td>
 
+<td>
 ${trend}
-
 </td>
 
 <td>
 
-<span class="${scoreClass}">
+<div style="
+background:#1565C0;
+color:white;
+padding:5px;
+border-radius:8px;
+text-align:center;
+font-weight:bold;
+">
 
 ${score}
+
+</div>
+
+</td>
+
+<td>
+
+<span style="font-weight:bold;">
+
+${signal}
 
 </span>
 
@@ -112,15 +148,9 @@ ${score}
 
 <td>
 
-${status}
+<button onclick="detailCoin('${coin.id}')">
 
-</td>
-
-<td>
-
-<button onclick="showDetail('${coin.id}')">
-
-Lihat
+Detail
 
 </button>
 
@@ -131,50 +161,65 @@ Lihat
 `;
 
 });
-  function showDetail(id){
+// ==========================================
+// Fungsi Detail
+// ==========================================
+
+function detailCoin(id){
 
 alert(
-"Detail analisis untuk: " + id +
-"\n\nFitur detail akan tersedia pada Versi 3.0"
+"Coin : " + id +
+"\n\nFitur detail akan ditambahkan pada versi berikutnya."
 );
 
 }
 
-document.getElementById("totalCoin").innerHTML=data.length;
+// ==========================================
+// Update Waktu
+// ==========================================
 
-document.getElementById("updateTime").innerHTML=
-new Date().toLocaleTimeString("id-ID");
+function updateTime(){
 
-}catch(error){
+const now=new Date();
 
-console.log(error);
+const jam=now.toLocaleTimeString("id-ID");
 
-alert("Gagal mengambil data dari CoinGecko.");
+const el=document.getElementById("updateTime");
 
+if(el){
+el.innerHTML=jam;
 }
 
 }
+
+// ==========================================
+// Tombol Refresh
+// ==========================================
+
 document.addEventListener("DOMContentLoaded",()=>{
 
 loadCrypto();
 
-// Update setiap 1 jam
+updateTime();
+
+setInterval(updateTime,1000);
+
+// Update data setiap 1 jam
 setInterval(loadCrypto,3600000);
 
-// Tombol Refresh
-const refreshBtn=document.getElementById("refreshBtn");
+const refresh=document.getElementById("refreshBtn");
 
-if(refreshBtn){
+if(refresh){
 
-refreshBtn.addEventListener("click",()=>{
+refresh.addEventListener("click",()=>{
 
-refreshBtn.innerHTML="Loading...";
+refresh.innerHTML="Loading...";
 
 loadCrypto();
 
 setTimeout(()=>{
 
-refreshBtn.innerHTML='<i class="fa-solid fa-rotate"></i> Refresh';
+refresh.innerHTML="🔄 Refresh";
 
 },1500);
 
@@ -183,34 +228,13 @@ refreshBtn.innerHTML='<i class="fa-solid fa-rotate"></i> Refresh';
 }
 
 });
-// =====================================
-// Utility Functions
-// =====================================
 
-function formatNumber(num){
+}catch(error){
 
-if(num>=1000000000){
-return (num/1000000000).toFixed(2)+" B";
-}
+console.error(error);
 
-if(num>=1000000){
-return (num/1000000).toFixed(2)+" M";
-}
-
-if(num>=1000){
-return (num/1000).toFixed(2)+" K";
-}
-
-return num.toString();
+alert("Gagal mengambil data CoinGecko.");
 
 }
 
-function getSignalColor(status){
-
-if(status.includes("Strong Buy")) return "#0f9d58";
-
-if(status.includes("Buy")) return "#34a853";
-
-if(status.includes("Hold")) return "#fbbc04";
-
-if(status.includes("Sell")) return "#ff6d
+  }
