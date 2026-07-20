@@ -4,7 +4,7 @@
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
 <title>AI Crypto Analyzer</title>
 
@@ -12,15 +12,14 @@
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 
 </head>
 
 <body>
 
-<!-- =========================
-SIDEBAR
-========================= -->
+<!-- SIDEBAR -->
 
 <div class="sidebar">
 
@@ -30,75 +29,31 @@ SIDEBAR
 
 <h2>AI Crypto</h2>
 
-<span>Analyzer v1.0</span>
+<p>Analyzer Pro</p>
 
 </div>
 
 <ul>
 
-<li class="active">
+<li class="active"><i class="fa-solid fa-house"></i> Dashboard</li>
 
-<i class="fa-solid fa-house"></i>
+<li><i class="fa-solid fa-ranking-star"></i> Ranking AI</li>
 
-Dashboard
+<li><i class="fa-solid fa-coins"></i> Semua Coin</li>
 
-</li>
+<li><i class="fa-solid fa-star"></i> Watchlist</li>
 
-<li>
+<li><i class="fa-solid fa-chart-line"></i> TradingView</li>
 
-<i class="fa-solid fa-ranking-star"></i>
+<li><i class="fa-solid fa-newspaper"></i> Berita</li>
 
-Ranking AI
-
-</li>
-
-<li>
-
-<i class="fa-solid fa-coins"></i>
-
-Semua Coin
-
-</li>
-
-<li>
-
-<i class="fa-solid fa-star"></i>
-
-Watchlist
-
-</li>
-
-<li>
-
-<i class="fa-solid fa-newspaper"></i>
-
-Berita
-
-</li>
-
-<li>
-
-<i class="fa-solid fa-chart-line"></i>
-
-TradingView
-
-</li>
-
-<li>
-
-<i class="fa-solid fa-gear"></i>
-
-Pengaturan
-
-</li>
+<li><i class="fa-solid fa-gear"></i> Pengaturan</li>
 
 </ul>
 
 </div>
 
-<!-- =========================
-CONTENT
-========================= -->
+<!-- CONTENT -->
 
 <div class="content">
 
@@ -106,27 +61,17 @@ CONTENT
 
 <div>
 
-<h1>
+<h1>AI Crypto Analyzer</h1>
 
-AI Crypto Analyzer
-
-</h1>
-
-<p>
-
-Analisis Crypto Berbasis AI
-
-</p>
+<p>Dashboard Analisis Cryptocurrency Berbasis AI</p>
 
 </div>
 
 <div class="top-menu">
 
-<input
-type="text"
-placeholder="Cari BTC, ETH, SOL ...">
+<input type="text" placeholder="Cari BTC, ETH, SOL...">
 
-<button>
+<button id="refreshBtn">
 
 <i class="fa-solid fa-rotate"></i>
 
@@ -138,21 +83,13 @@ Refresh
 
 </header>
 
-<!-- =========================
-CARD
-========================= -->
-
 <div class="cards">
 
 <div class="card">
 
 <h3>Total Coin</h3>
 
-<h2 id="coinTotal">
-
-500
-
-</h2>
+<h2 id="totalCoin">500</h2>
 
 </div>
 
@@ -160,36 +97,78 @@ CARD
 
 <h3>Strong Buy</h3>
 
-<h2 id="buyTotal">
-
-23
-
-</h2>
+<h2 id="strongBuy">0</h2>
 
 </div>
 
 <div class="card">
 
-<h3>Update</h3>
+<h3>Last Update</h3>
 
-<h2 id="updateTime">
-
-10.00 WIB
-
-</h2>
+<h2 id="updateTime">--:--</h2>
 
 </div>
 
 <div class="card">
 
-<h3>AI Confidence</h3>
+<h3>Market Trend</h3>
 
-<h2>
-
-96%
-
-</h2>
+<h2 id="marketTrend">Bullish</h2>
 
 </div>
 
 </div>
+
+<div class="table-card">
+
+<h2>📊 Ranking AI Crypto</h2>
+
+<table id="cryptoTable">
+
+<thead>
+
+<tr>
+
+<th>Rank</th>
+
+<th>Coin</th>
+
+<th>Harga</th>
+
+<th>AI Score</th>
+
+<th>Probabilitas</th>
+
+<th>Prediksi</th>
+
+<th>Status</th>
+
+<th>Detail</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+</tbody>
+
+</table>
+
+</div>
+
+<div class="chart-card">
+
+<h2>📈 TradingView</h2>
+
+<div id="tradingview_chart"></div>
+
+</div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+
+</html>
