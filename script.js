@@ -1,94 +1,56 @@
-// ================================
-// AI CRYPTO ANALYZER V1.0
-// ================================
+// ====================================
+// AI CRYPTO ANALYZER V1.1
+// Real Time Data CoinGecko
+// ====================================
 
-const cryptoData = [
+const api =
+"https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false";
 
-{
-rank:1,
-coin:"BTC",
-price:"Loading...",
-score:96,
-probability:"91%",
-prediction:"+3.2%",
-status:"🟢 Strong Buy"
-},
+async function loadCrypto(){
 
-{
-rank:2,
-coin:"ETH",
-price:"Loading...",
-score:93,
-probability:"88%",
-prediction:"+2.4%",
-status:"🟢 Buy"
-},
+try{
 
-{
-rank:3,
-coin:"SOL",
-price:"Loading...",
-score:91,
-probability:"86%",
-prediction:"+2.0%",
-status:"🟢 Buy"
-},
+const response = await fetch(api);
 
-{
-rank:4,
-coin:"BNB",
-price:"Loading...",
-score:89,
-probability:"82%",
-prediction:"+1.8%",
-status:"🟢 Buy"
-},
+const data = await response.json();
 
-{
-rank:5,
-coin:"XRP",
-price:"Loading...",
-score:85,
-probability:"80%",
-prediction:"+1.4%",
-status:"🟢 Buy"
-}
-
-];
-
-function loadTable(){
-
-const tbody=document.querySelector("#cryptoTable tbody");
+const tbody = document.querySelector("#cryptoTable tbody");
 
 tbody.innerHTML="";
 
-cryptoData.forEach(c=>{
+data.forEach((coin,index)=>{
 
-tbody.innerHTML+=`
+let score=Math.floor(Math.random()*25)+75;
+
+let status="🟡 Hold";
+
+if(score>=95) status="🟢 Strong Buy";
+else if(score>=85) status="🟢 Buy";
+else if(score>=70) status="🟡 Hold";
+else if(score>=50) status="🟠 Sell";
+else status="🔴 Strong Sell";
+
+tbody.innerHTML +=`
 
 <tr>
 
-<td>${c.rank}</td>
-
-<td>${c.coin}</td>
-
-<td>${c.price}</td>
+<td>${index+1}</td>
 
 <td>
 
-<span class="score">
+<img src="${coin.image}" width="28">
 
-${c.score}
-
-</span>
+<b>${coin.symbol.toUpperCase()}</b>
 
 </td>
 
-<td>${c.probability}</td>
+<td>$ ${coin.current_price.toLocaleString()}</td>
 
-<td>${c.prediction}</td>
+<td>${score}</td>
 
-<td>${c.status}</td>
+<td>${coin.price_change_percentage_24h.toFixed(2)}%</td>
+
+<td>${status}</td>
 
 <td>
 
@@ -106,30 +68,18 @@ Detail
 
 });
 
-}
+document.getElementById("totalCoin").innerHTML=data.length;
 
-function updateClock(){
+document.getElementById("updateTime").innerHTML=new Date().toLocaleTimeString();
 
-const now=new Date();
+}catch(err){
 
-document.getElementById("updateTime").innerHTML=
-
-now.toLocaleTimeString("id-ID");
+console.log(err);
 
 }
 
-document.addEventListener("DOMContentLoaded",()=>{
+}
 
-loadTable();
+loadCrypto();
 
-updateClock();
-
-setInterval(updateClock,1000);
-
-});
-
-document.getElementById("refreshBtn").addEventListener("click",()=>{
-
-loadTable();
-
-});
+setInterval(loadCrypto,3600000);
