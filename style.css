@@ -121,3 +121,26 @@ header{
     color:#1565C0;
     font-size:30px;
 }
+.score-high{
+background:#2e7d32;
+color:white;
+padding:6px 12px;
+border-radius:20px;
+font-weight:bold;
+}
+
+.score-medium{
+background:#f9a825;
+color:white;
+padding:6px 12px;
+border-radius:20px;
+font-weight:bold;
+}
+
+.score-low{
+background:#d32f2f;
+color:white;
+padding:6px 12px;
+border-radius:20px;
+font-weight:bold;
+}
