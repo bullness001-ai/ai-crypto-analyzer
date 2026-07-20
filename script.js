@@ -16,21 +16,14 @@ const data = await response.json();
 
 const tbody = document.querySelector("#cryptoTable tbody");
 
-tbody.innerHTML="";
+let trend="➡ Sideways";
 
-data.forEach((coin,index)=>{
-
-let score=Math.floor(Math.random()*25)+75;
-
-let status="🟡 Hold";
-
-if(score>=95) status="🟢 Strong Buy";
-else if(score>=85) status="🟢 Buy";
-else if(score>=70) status="🟡 Hold";
-else if(score>=50) status="🟠 Sell";
-else status="🔴 Strong Sell";
-
-tbody.innerHTML += `
+if(coin.price_change_percentage_24h>5){
+trend="🟢 Bullish";
+}
+else if(coin.price_change_percentage_24h<-5){
+trend="🔴 Bearish";
+}
 
 <tr>
 
@@ -62,28 +55,20 @@ $${(coin.total_volume/1000000).toFixed(2)} M
 
 </td>
 
-<td>
+<td>$${(coin.market_cap/1000000000).toFixed(2)} B</td>
 
-$${(coin.market_cap/1000000000).toFixed(2)} B
-
-</td>
+<td>${trend}</td>
 
 <td>
-
+<span class="${scoreClass}">
 ${score}
-
+</span>
 </td>
 
-<td>
-
-${status}
-
-</td>
+<td>${status}</td>
 
 <td>
-
 <button>Lihat</button>
-
 </td>
 
 </tr>
