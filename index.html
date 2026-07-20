@@ -4,22 +4,20 @@
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
 
 <title>AI Crypto Analyzer</title>
 
 <link rel="stylesheet" href="style.css">
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
 <link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
 </head>
 
 <body>
-
-<!-- SIDEBAR -->
 
 <div class="sidebar">
 
@@ -29,47 +27,55 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
 
 <h2>AI Crypto</h2>
 
-<p>Analyzer Pro</p>
+<p>Analyzer</p>
 
 </div>
 
 <ul>
 
-<li class="active"><i class="fa-solid fa-house"></i> Dashboard</li>
+<li class="active">
+<i class="fa-solid fa-house"></i>
+Dashboard
+</li>
 
-<li><i class="fa-solid fa-ranking-star"></i> Ranking AI</li>
+<li>
+<i class="fa-solid fa-chart-line"></i>
+Ranking
+</li>
 
-<li><i class="fa-solid fa-coins"></i> Semua Coin</li>
+<li>
+<i class="fa-solid fa-coins"></i>
+Semua Coin
+</li>
 
-<li><i class="fa-solid fa-star"></i> Watchlist</li>
+<li>
+<i class="fa-solid fa-star"></i>
+Watchlist
+</li>
 
-<li><i class="fa-solid fa-chart-line"></i> TradingView</li>
-
-<li><i class="fa-solid fa-newspaper"></i> Berita</li>
-
-<li><i class="fa-solid fa-gear"></i> Pengaturan</li>
+<li>
+<i class="fa-solid fa-gear"></i>
+Settings
+</li>
 
 </ul>
 
 </div>
 
-<!-- CONTENT -->
-
 <div class="content">
 
 <header>
 
-<div>
-
-<h1>AI Crypto Analyzer</h1>
-
-<p>Dashboard Analisis Cryptocurrency Berbasis AI</p>
-
-</div>
+<h1>
+AI Crypto Analyzer
+</h1>
 
 <div class="top-menu">
 
-<input type="text" placeholder="Cari BTC, ETH, SOL...">
+<input
+type="text"
+id="searchCoin"
+placeholder="Cari BTC, ETH...">
 
 <button id="refreshBtn">
 
@@ -83,13 +89,29 @@ Refresh
 
 </header>
 
-<div class="cards">
+<section class="cards">
 
 <div class="card">
 
 <h3>Total Coin</h3>
 
-<h2 id="totalCoin">500</h2>
+<h2 id="totalCoin">
+
+100
+
+</h2>
+
+</div>
+
+<div class="card">
+
+<h3>Update</h3>
+
+<h2 id="updateTime">
+
+00:00
+
+</h2>
 
 </div>
 
@@ -97,50 +119,72 @@ Refresh
 
 <h3>Strong Buy</h3>
 
-<h2 id="strongBuy">0</h2>
+<h2 id="buyCount">
+
+0
+
+</h2>
 
 </div>
 
 <div class="card">
 
-<h3>Last Update</h3>
+<h3>Market</h3>
 
-<h2 id="updateTime">--:--</h2>
+<h2>
 
-</div>
+LIVE
 
-<div class="card">
-
-<h3>Market Trend</h3>
-
-<h2 id="marketTrend">Bullish</h2>
+</h2>
 
 </div>
 
+</section>
+<section class="table-section">
+
+<div class="table-header">
+
+<h2>Top 100 Cryptocurrency</h2>
+
+<p>Data Real-Time CoinGecko</p>
+
 </div>
 
-<div class="table-card">
-
-<h2>📊 Ranking AI Crypto</h2>
+<div class="table-responsive">
 
 <table id="cryptoTable">
 
 <thead>
+
 <tr>
+
 <th>Rank</th>
+
 <th>Coin</th>
+
 <th>Harga</th>
-<th>24 Jam</th>
-<th>Volume</th>
+
+<th>24H</th>
+
 <th>Market Cap</th>
+
+<th>Volume</th>
+
 <th>Trend</th>
+
 <th>AI Score</th>
+
 <th>Sinyal</th>
+
 <th>Detail</th>
+
 </tr>
+
 </thead>
 
 <tbody>
+
+<!-- Data akan diisi otomatis oleh script.js -->
 
 </tbody>
 
@@ -148,18 +192,53 @@ Refresh
 
 </div>
 
-<div class="chart-card">
+</section>
 
-<h2>📈 TradingView</h2>
+<section class="chart-section">
 
-<div id="tradingview_chart"></div>
+<div class="chart-header">
+
+<h2>TradingView Chart</h2>
 
 </div>
+
+<div id="tradingview_chart">
+
+<p style="text-align:center;padding:40px;color:#777;">
+
+Grafik TradingView akan ditambahkan pada versi berikutnya.
+
+</p>
+
+</div>
+
+</section>
+<footer class="footer">
+
+<div class="footer-left">
+
+<p>
+© 2026 AI Crypto Analyzer
+</p>
+
+</div>
+
+<div class="footer-right">
+
+<p>
+
+Data Source :
+<b>CoinGecko API</b>
+
+</p>
+
+</div>
+
+</footer>
 
 </div>
 
 <script src="script.js"></script>
 
 </body>
-
 </html>
